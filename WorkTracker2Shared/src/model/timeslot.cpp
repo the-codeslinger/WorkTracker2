@@ -4,24 +4,19 @@
 using namespace Model;
 using namespace Core;
 
-Timeslot::Timeslot()
+Timeslot::Timeslot(const QDateTime& start)
+    : start_{start}
 {
-    Core::invalidId;
 }
 
-Timeslot::Timeslot(const QDateTime start)
+Timeslot::Timeslot(const QDateTime& start, const QDateTime& stop)
+    : start_{start}
+    , stop_{stop}
 {
-    start_ = start;
-}
-
-Timeslot::Timeslot(const QDateTime start, const QDateTime stop)
-{
-    start_ = start;
-    stop_ = stop;
 }
 
 QDateTime
-Timeslot::start()
+Timeslot::start() const
 {
     return start_;
 }
@@ -33,7 +28,7 @@ Timeslot::setStart(const QDateTime start)
 }
 
 QDateTime
-Timeslot::stop()
+Timeslot::stop() const
 {
     return stop_;
 }
@@ -47,5 +42,13 @@ Timeslot::setStop(const QDateTime stop)
 Duration
 Timeslot::duration() const
 {
-    return Duration(234);
+    if (!start_.isValid()) {
+        return Duration{};
+    }
+
+    if (!stop_.isValid()) {
+        return Duration{start_.msecsTo(QDateTime::currentDateTimeUtc())};
+    }
+
+    return Duration{start_.msecsTo(stop_)};
 }

@@ -19,14 +19,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     src/core/duration.cpp \
     src/model/task.cpp \
-    src/model/timeslot.cpp
+    src/model/timeslot.cpp \
+    src/model/worktask.cpp
 
 HEADERS += \
+    src/core/helper.h \
     src/worktracker2_global.h \
     src/core/constants.h \
     src/core/duration.h \
     src/model/task.h \
-    src/model/timeslot.h
+    src/model/timeslot.h \
+    src/model/worktask.h
 
 # Default rules for deployment.
 unix {
