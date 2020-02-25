@@ -12,10 +12,6 @@ namespace Model {
  * It consists of a start and a stop timestamp.
  */
 class WT2_EXPORT Timeslot {
-private:
-    QDateTime start_;
-    QDateTime stop_;
-
 public:
     /**
      * Create an invalid timeslot.
@@ -72,6 +68,10 @@ public:
      *      an intermediate result.
      */
     Core::Duration duration() const;
+
+private:
+    QDateTime start_;
+    QDateTime stop_;
 };
 
 }

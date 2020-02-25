@@ -17,11 +17,6 @@ namespace Model {
  */
 class WT2_EXPORT Task
 {
-private:
-    int id_;
-    QString name_;
-    QDateTime lastUsed_;
-
 public:
     /**
      * Creates a new `Task` without any values.
@@ -32,13 +27,6 @@ public:
      * Creates a new instance with a data source, an id, a name and the last-used date.
      */
     Task(int id, const QString& name, const QDateTime& lastUsed);
-
-    /**
-     * Copies the values from another `Task` instance. This is not a deep copy. In the end
-     * both instances reference the same data and changes in one will appear on the other
-     * as well.
-     */
-    Task(const Task& other);
 
     /**
      * @return
@@ -73,6 +61,11 @@ public:
      * Set a new `lastUsed` date.
      */
     void setLastUsed(const QDateTime& lastUsed);
+
+private:
+    int id_;
+    QString name_;
+    QDateTime lastUsed_;
 };
 
 }

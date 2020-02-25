@@ -16,18 +16,6 @@ Duration::Duration(qint64 milliseconds)
 {
 }
 
-Duration::Duration(const Duration& other)
-    : milliseconds_{other.milliseconds_}
-{
-}
-
-Duration&
-Duration::operator=(const Duration& other)
-{
-    milliseconds_ = other.milliseconds_;
-    return *this;
-}
-
 Duration
 Duration::operator+(const Duration& other) const
 {

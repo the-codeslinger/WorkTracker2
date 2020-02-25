@@ -12,12 +12,6 @@ WorkTask::WorkTask(const Task& task)
 {
 }
 
-WorkTask::WorkTask(const WorkTask& other)
-    : task_{other.task_}
-    , timeslots_{other.timeslots_}
-{
-}
-
 Task
 WorkTask::task() const
 {

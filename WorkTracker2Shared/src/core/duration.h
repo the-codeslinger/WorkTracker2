@@ -24,16 +24,6 @@ public:
     Duration(qint64 milliseconds);
 
     /**
-     * Copy constructor.
-     */
-    Duration(const Duration& other);
-
-    /**
-     * Assignment operator.
-     */
-    Duration& operator=(const Duration& other);
-
-    /**
      * Add the `other` duration to `this` and return a new duration.
      *
      * @return

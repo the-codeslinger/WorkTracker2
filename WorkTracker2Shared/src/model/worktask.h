@@ -27,11 +27,6 @@ public:
     WorkTask(const Task& task);
 
     /**
-     * Copy constructor.
-     */
-    WorkTask(const WorkTask& other);
-
-    /**
      * @return
      *      Returns the task that is assigned.
      */

@@ -15,13 +15,6 @@ Task::Task(int id, const QString& name, const QDateTime& lastUsed)
 {
 }
 
-Task::Task(const Task& other)
-    : id_{other.id_}
-    , name_{other.name_}
-    , lastUsed_{other.lastUsed_}
-{
-}
-
 int
 Task::id() const
 {
