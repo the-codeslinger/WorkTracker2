@@ -41,7 +41,7 @@ WorkTask::duration() const
 {
     auto totalTime = Duration{};
 
-    forEach(timeslots_, [&totalTime](const Timeslot& time) {
+    forEach(timeslots_, [&totalTime](const auto& time) {
         totalTime += time.duration();
     });
 
@@ -51,7 +51,7 @@ WorkTask::duration() const
 bool
 WorkTask::isActiveTask() const
 {
-    return std::end(timeslots_) != findIf(timeslots_, [](const Timeslot& time) {
+    return std::end(timeslots_) != findIf(timeslots_, [](const auto& time) {
         return time.stop().isNull();
     });
 }
@@ -59,7 +59,18 @@ WorkTask::isActiveTask() const
 Timeslot
 WorkTask::activeTime() const
 {
-    return firstOrDefault<QList<Timeslot>>(timeslots_, [](const Timeslot& time) {
+    return firstOrDefault<QList<Timeslot>>(timeslots_, [](const auto& time) {
         return time.stop().isNull();
     });
+}
+
+bool
+WorkTask::merge(const WorkTask& other)
+{
+    if (task_ != other.task()) {
+        return false;
+    }
+
+    timeslots_.append(other.timeSlots());
+    return true;
 }

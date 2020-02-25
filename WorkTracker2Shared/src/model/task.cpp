@@ -15,6 +15,24 @@ Task::Task(int id, const QString& name, const QDateTime& lastUsed)
 {
 }
 
+bool
+Task::operator==(const Task& other) const
+{
+    return id_ == other.id_ && name_.toLower() == other.name_.toLower();
+}
+
+bool
+Task::operator!=(const Task& other) const
+{
+    return !operator==(other);
+}
+
+bool
+Task::operator<(const Task& other) const
+{
+    return id_ < other.id_ && name_ < other.name_;
+}
+
 int
 Task::id() const
 {

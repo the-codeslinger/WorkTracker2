@@ -68,6 +68,16 @@ public:
      */
     Timeslot activeTime() const;
 
+    /**
+     * Merges all timeslots of `other` into `this` if both reference the same `Task`.
+     *
+     * @return
+     *      Returns `true` if the timeslots have been added or `false` if `this` and
+     *      `other` do not reference the same `Task`. In that case no changes will be
+     *      made to `this`.
+     */
+    bool merge(const WorkTask& other);
+
 private:
     Task task_;
     QList<Timeslot> timeslots_;

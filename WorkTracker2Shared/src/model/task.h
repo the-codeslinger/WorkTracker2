@@ -29,6 +29,20 @@ public:
     Task(int id, const QString& name, const QDateTime& lastUsed);
 
     /**
+     * Compares `id()` and `name()` and returns `true` if both are the same. The task's
+     * name is compared case-insensitive.
+     */
+    bool operator==(const Task& other) const;
+
+    /**
+     * Compares `id()` and `name()` and returns `true` if either one of them are
+     * different.The task's name is compared case-insensitive.
+     */
+    bool operator!=(const Task& other) const;
+
+    bool operator<(const Task& other) const;
+
+    /**
      * @return
      * Returns the database id of the task or `Core::invalidId` if the task is yet to be
      * saved to database.

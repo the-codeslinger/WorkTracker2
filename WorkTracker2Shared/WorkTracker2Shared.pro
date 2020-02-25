@@ -3,7 +3,7 @@ QT -= gui
 TEMPLATE = lib
 DEFINES += WT2_LIBRARY
 
-CONFIG += c++11
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -20,7 +20,8 @@ SOURCES += \
     src/core/duration.cpp \
     src/model/task.cpp \
     src/model/timeslot.cpp \
-    src/model/worktask.cpp
+    src/model/worktask.cpp \
+    src/model/workday.cpp
 
 HEADERS += \
     src/core/helper.h \
@@ -29,7 +30,8 @@ HEADERS += \
     src/core/duration.h \
     src/model/task.h \
     src/model/timeslot.h \
-    src/model/worktask.h
+    src/model/worktask.h \
+    src/model/workday.h
 
 # Default rules for deployment.
 unix {
