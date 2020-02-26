@@ -20,18 +20,20 @@ SOURCES += \
     src/core/duration.cpp \
     src/model/task.cpp \
     src/model/timeslot.cpp \
-    src/model/worktask.cpp \
-    src/model/workday.cpp
+    src/model/workday.cpp \
+    src/model/worktask.cpp
 
 HEADERS += \
-    src/core/helper.h \
     src/worktracker2_global.h \
     src/core/constants.h \
     src/core/duration.h \
+    src/core/helper.h \
+    src/data/taskrepository.h \
+    src/data/workdayrepository.h \
     src/model/task.h \
     src/model/timeslot.h \
-    src/model/worktask.h \
-    src/model/workday.h
+    src/model/workday.h \
+    src/model/worktask.h
 
 # Default rules for deployment.
 unix {
