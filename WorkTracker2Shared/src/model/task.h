@@ -40,12 +40,16 @@ public:
      */
     bool operator!=(const Task& other) const;
 
+    /**
+     * Required by `QMap` for `Task` to be used as a key. Simply compares `id` and `name`
+     * with `other` using the less-than operator.
+     */
     bool operator<(const Task& other) const;
 
     /**
      * @return
-     * Returns the database id of the task or `Core::invalidId` if the task is yet to be
-     * saved to database.
+     *      Returns the database id of the task or `Core::invalidId` if the task is yet
+     *      to be saved to database.
      */
     int id() const;
 
@@ -56,7 +60,7 @@ public:
 
     /**
      * @return
-     * Returns the name of the task.
+     *      Returns the name of the task.
      */
     QString name() const;
 
@@ -67,7 +71,7 @@ public:
 
     /**
      * @return
-     * Returns the last-used date.
+     *      Returns the last-used date.
      */
     QDateTime lastUsed() const;
 
