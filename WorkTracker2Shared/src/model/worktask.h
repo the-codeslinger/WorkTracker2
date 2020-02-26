@@ -66,7 +66,7 @@ public:
      *      Returns the currently active work-time or a null-work-time if there is none
      *      without a stop timestamp.
      */
-    Timeslot activeTime() const;
+    std::optional<Timeslot> activeTime() const;
 
     /**
      * Merges all timeslots of `other` into `this` if both reference the same `Task`.

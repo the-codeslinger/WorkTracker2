@@ -51,15 +51,13 @@ WorkTask::duration() const
 bool
 WorkTask::isActiveTask() const
 {
-    return std::end(timeslots_) != findIf(timeslots_, [](const auto& time) {
-        return time.stop().isNull();
-    });
+    return activeTime().has_value();
 }
 
-Timeslot
+std::optional<Timeslot>
 WorkTask::activeTime() const
 {
-    return firstOrDefault<QList<Timeslot>>(timeslots_, [](const auto& time) {
+    return findValueIf(timeslots_, [](const auto& time) {
         return time.stop().isNull();
     });
 }

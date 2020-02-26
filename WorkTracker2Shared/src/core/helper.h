@@ -41,22 +41,4 @@ findValueIf(const Container& container, Func func)
     return std::make_optional(*found);
 }
 
-/**
- * Iterates the container until `func` returns `true`. Returns the found element or a
- * default constructed one.
- */
-template<typename Container>
-inline typename Container::value_type
-firstOrDefault(
-        const Container& container,
-        std::function<bool(typename Container::value_type)> func)
-{
-    for (const auto& item : container) {
-        if (func(item)) {
-            return item;
-        }
-    }
-    return typename Container::value_type();
-}
-
 }
