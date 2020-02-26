@@ -10,13 +10,27 @@ Workday::Workday(const QDateTime& start)
 }
 
 Workday::Workday(
-        const QDateTime& start, const QDateTime& stop, const QList<WorkTask>& workTasks)
-    : start_(start)
+        int id, const QDateTime& start, const QDateTime& stop,
+        const QList<WorkTask>& workTasks)
+    : id_(id)
+    , start_(start)
     , stop_(stop)
 {
     for (const auto& workTask : workTasks) {
         addWorkTask(workTask);
     }
+}
+
+int
+Workday::id() const
+{
+    return id_;
+}
+
+void
+Workday::setId(int id)
+{
+    id_ = id;
 }
 
 QDateTime
@@ -71,7 +85,9 @@ Workday::findWorkTask(const Task& task) const
 std::optional<WorkTask>
 Workday::activeWorkTask() const
 {
-    return std::nullopt;
+    return findValueIf(workTasks_.values(), [](const auto& wt) {
+        return wt.isActiveTask();
+    });
 }
 
 QList<Task>

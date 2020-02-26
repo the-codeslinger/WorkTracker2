@@ -33,8 +33,20 @@ public:
      * Create a new `Workday` with both start and stop timestamps and the list of
      * work-tasks. You'll likely use this when creating an object from a day in the past.
      */
-    Workday(const QDateTime& start, const QDateTime& stop,
+    Workday(int id, const QDateTime& start, const QDateTime& stop,
             const QList<WorkTask>& workTasks);
+
+    /**
+     * @return
+     *      Returns the database id of the workday or `Core::invalidId` if it is yet to
+     *      be saved to database.
+     */
+    int id() const;
+
+    /**
+     * Set a new database `id`.
+     */
+    void setId(int id);
 
     /**
      * @return
@@ -103,6 +115,7 @@ public:
     Core::Duration duration() const;
 
 private:
+    int id_;
     QDateTime start_;
     QDateTime stop_;
     QMap<Task, WorkTask> workTasks_;
