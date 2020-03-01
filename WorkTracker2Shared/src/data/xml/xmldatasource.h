@@ -3,13 +3,15 @@
 #include <QString>
 #include <QDomDocument>
 
+#include "../../worktracker2_global.h"
+
 namespace Data::Xml {
 
 /**
  * Represents the XML database file loaded into memory. If the file doesn't exist it
  * will be created.
  */
-class XmlDataSource {
+class WT2_EXPORT XmlDataSource {
 public:
     /**
      * Creates a new data source with an optional path to the database file.
