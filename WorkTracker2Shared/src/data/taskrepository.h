@@ -18,7 +18,7 @@ namespace Data {
  */
 class WT2_EXPORT TaskRepository {
 public:
-    virtual ~TaskRepository() {}
+    virtual ~TaskRepository() = default;
 
     /**
      * Count the number of tasks in the database.

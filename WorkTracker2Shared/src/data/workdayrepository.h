@@ -17,7 +17,7 @@ namespace Data {
  */
 class WT2_EXPORT WorkdayRepository {
 public:
-    virtual ~WorkdayRepository() {}
+    virtual ~WorkdayRepository() = default;
 
     /**
      * Count the number of workdays in the database. The number returned does not
