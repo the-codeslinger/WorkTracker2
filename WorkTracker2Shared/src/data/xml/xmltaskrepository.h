@@ -7,6 +7,7 @@
 #include "../../worktracker2_global.h"
 #include "../../model/task.h"
 #include "../taskrepository.h"
+#include "xmldatasource.h"
 
 namespace Data::Xml {
 
