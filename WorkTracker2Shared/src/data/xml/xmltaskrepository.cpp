@@ -78,7 +78,7 @@ XmlTaskRepository::saveTask(Model::Task& task)
         task.setId(countTasks());
         dom_.appendChild(elementFromTask(task));
     } else {
-
+        auto found = fin
         // Update
     }
     return task;
