@@ -17,7 +17,10 @@ SOURCES += \
     src/model/task.cpp \
     src/model/timeslot.cpp \
     src/model/workday.cpp \
-    src/model/worktask.cpp
+    src/model/worktask.cpp \
+    src/data/xml/xmldatasource.cpp \
+    src/data/xml/xmlrepository.cpp \
+    src/data/xml/xmltaskrepository.cpp
 
 HEADERS += \
     src/worktracker2_global.h \
@@ -26,8 +29,9 @@ HEADERS += \
     src/core/helper.h \
     src/data/taskrepository.h \
     src/data/workdayrepository.h \
-    src/data/xml/xmltaskrepository.h \
     src/data/xml/xmldatasource.h \
+    src/data/xml/xmlrepository.h \
+    src/data/xml/xmltaskrepository.h \
     src/model/task.h \
     src/model/timeslot.h \
     src/model/workday.h \

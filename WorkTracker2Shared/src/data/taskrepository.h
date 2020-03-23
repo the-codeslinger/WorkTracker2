@@ -60,12 +60,14 @@ public:
      *
      * @param task
      *      The task to save. If the task has an id then its name is updated.
+     *      Note: This value is updated with an id if doesn't already have one.
      *
      * @return
-     *      Returns the saved task. If the task is new then the returned value contains
-     *      the database id in addition to the name.
+     *      Returns the saved task. This is the same object as the parameter. If the task
+     *      is new then the returned value contains the database id in addition to the
+     *      name.
      */
-    virtual Model::Task saveTask(const Model::Task& task) = 0;
+    virtual Model::Task saveTask(Model::Task& task) = 0;
 };
 
 }
