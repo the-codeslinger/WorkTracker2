@@ -32,7 +32,7 @@ public:
     virtual Model::Task saveTask(Model::Task& task) override;
 
 private:
-    std::optional<Model::Task> taskFromElement(const QDomElement& taskElement) const;
+    Model::Task taskFromElement(const QDomElement& taskElement) const;
     QDomElement elementFromTask(const Model::Task& task) const;
     QDomElement updateElement(const Model::Task& task, QDomElement& element) const;
 };
