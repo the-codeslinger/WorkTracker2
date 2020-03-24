@@ -167,3 +167,14 @@ XmlRepository::findElementById(int id) const
         return false;
     });
 }
+
+QDomElement
+XmlRepository::createElement(const QString& elementName) const
+{
+    if (!dataSource_.isNull()) {
+        return dataSource_.document().createElement(elementName);
+    } else {
+        qDebug() << "No database file loaded; cannot create valid element, return null";
+        return QDomElement{};
+    }
+}

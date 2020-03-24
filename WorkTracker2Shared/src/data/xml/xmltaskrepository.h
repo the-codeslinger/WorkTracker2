@@ -19,8 +19,6 @@ class WT2_EXPORT XmlTaskRepository : XmlRepository, TaskRepository {
 public:
     XmlTaskRepository(const XmlDataSource& dataSource);
 
-    virtual ~XmlTaskRepository() override;
-
     virtual int countTasks() const override;
 
     virtual std::optional<Model::Task> findTaskById(int id) const override;

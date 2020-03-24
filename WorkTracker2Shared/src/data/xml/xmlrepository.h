@@ -166,6 +166,11 @@ protected:
         return results;
     }
 
+    /**
+     * Create and return a new `QDomElement` that has a given name.
+     */
+    QDomElement createElement(const QString& elementName) const;
+
 private:
     /**
      * The DOM document that represents the XML database file.

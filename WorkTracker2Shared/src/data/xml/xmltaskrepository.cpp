@@ -4,15 +4,13 @@
 using namespace Data::Xml;
 
 static const QString TASKS_LIST_ELEMENT_NAME = "tasks";
-static const QString NAME_ATTRIBUTE_NAME = "name";
-static const QString LAST_USED_ATTRIBUTE_NAME = "last_used";
+static const QString TASK_ELEMENT_NAME = "item";
+
+static const QString TASK_NAME_ATTRIBUTE_NAME = "name";
+static const QString TASK_LAST_USED_ATTRIBUTE_NAME = "last_used";
 
 XmlTaskRepository::XmlTaskRepository(const XmlDataSource& dataSource)
     : XmlRepository(dataSource, TASKS_LIST_ELEMENT_NAME)
-{
-}
-
-XmlTaskRepository::~XmlTaskRepository()
 {
 }
 
@@ -36,7 +34,7 @@ std::optional<Model::Task>
 XmlTaskRepository::findTaskByName(const QString& name) const
 {
     auto found = findFirstElement([name](const QDomElement& element) {
-        return name.toLower() == element.attribute(NAME_ATTRIBUTE_NAME).toLower();
+        return name.toLower() == element.attribute(TASK_NAME_ATTRIBUTE_NAME).toLower();
     });
     if (found.isNull()) {
         return std::nullopt;
@@ -77,15 +75,15 @@ XmlTaskRepository::taskFromElement(const QDomElement& taskElement) const
 {
     return Model::Task{
         attributeInt(ID_ATTRIBUTE_NAME, taskElement),
-        attributeString(NAME_ATTRIBUTE_NAME, taskElement),
-        attributeDateTime(LAST_USED_ATTRIBUTE_NAME, taskElement)
+        attributeString(TASK_NAME_ATTRIBUTE_NAME, taskElement),
+        attributeDateTime(TASK_LAST_USED_ATTRIBUTE_NAME, taskElement)
     };
 }
 
 QDomElement
 XmlTaskRepository::elementFromTask(const Model::Task& task) const
 {
-    auto element = QDomElement{};
+    auto element = createElement(TASK_ELEMENT_NAME);
     return updateElement(task, element);
 }
 
@@ -93,7 +91,7 @@ QDomElement
 XmlTaskRepository::updateElement(const Model::Task& task, QDomElement& element) const
 {
     setAttribute(ID_ATTRIBUTE_NAME, task.id(), element);
-    setAttribute(NAME_ATTRIBUTE_NAME, task.name(), element);
-    setAttribute(LAST_USED_ATTRIBUTE_NAME, task.lastUsed(), element);
+    setAttribute(TASK_NAME_ATTRIBUTE_NAME, task.name(), element);
+    setAttribute(TASK_LAST_USED_ATTRIBUTE_NAME, task.lastUsed(), element);
     return element;
 }
