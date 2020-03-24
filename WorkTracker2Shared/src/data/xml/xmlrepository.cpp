@@ -20,14 +20,28 @@
 #include <QString>
 #include <QDate>
 #include <QDateTime>
+#include <QDebug>
 
 using namespace Data::Xml;
 
-XmlRepository::XmlRepository(XmlDataSource dataSource, const QString& name)
+const QString XmlRepository::ID_ATTRIBUTE_NAME = "id";
+
+XmlRepository::XmlRepository(XmlDataSource dataSource, const QString& repoName)
     : dataSource_{std::move(dataSource)}
 {
-    if (!dataSource.isNull()) {
-        dom_ = dataSource_.document().createElement(name);
+    if (!dataSource_.isNull()) {
+        auto root = dataSource_.document().documentElement();
+        if (!root.isNull()) {
+            repoElement_ = root.firstChildElement(repoName);
+            if (repoElement_.isNull()) {
+                repoElement_ = dataSource_.document().createElement(repoName);
+                root.appendChild(repoElement_);
+            }
+        } else {
+            qDebug() << "Unable to find root element in XML; "
+                     << "database file seems to be corrupted; "
+                     << dataSource_.location();
+        }
     }
 }
 
@@ -105,13 +119,13 @@ XmlRepository::attributeInt(const QString& name, const QDomElement& element) con
 }
 
 QDomElement
-XmlRepository::findFirstNode(std::function<bool(QDomElement)> func) const
+XmlRepository::findFirstElement(std::function<bool(QDomElement)> func) const
 {
-    if (dom_.isNull()) {
+    if (repoElement_.isNull()) {
         return QDomElement{};
     }
 
-    auto nodes = dom_.childNodes();
+    auto nodes = repoElement_.childNodes();
     for (int c = 0; c < nodes.length(); c++) {
         auto node = nodes.item(c);
         if (node.isElement()) {
@@ -122,4 +136,20 @@ XmlRepository::findFirstNode(std::function<bool(QDomElement)> func) const
         }
     }
     return QDomElement{};
+}
+
+QDomElement
+XmlRepository::findElementById(int id) const
+{
+    return findFirstElement([id](const QDomElement& element) {
+        auto value = element.attribute(ID_ATTRIBUTE_NAME);
+        if (!value.isNull()) {
+            auto ok = false;
+            auto foundId = value.toInt(&ok);
+            if (ok) {
+                return id == foundId;
+            }
+        }
+        return false;
+    });
 }

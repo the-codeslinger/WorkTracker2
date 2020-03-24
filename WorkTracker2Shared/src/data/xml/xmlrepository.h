@@ -18,11 +18,13 @@ namespace Data::Xml {
 class XmlRepository
 {
 protected:
+    static const QString ID_ATTRIBUTE_NAME;
+
     /**
      * Creates a new instance with a data source and a DOM element with the specified 
      * name.
      */
-    XmlRepository(XmlDataSource dataSource, const QString& name);
+    XmlRepository(XmlDataSource dataSource, const QString& repoName);
     
     /**
      * Gets the given element's attribute value as a string. 
@@ -119,20 +121,26 @@ protected:
             QDomElement& element) const;
 
     /**
-     * Iterates a `dom_` until `func` returns `true`. The found element is
+     * Iterates `dom_` until `func` returns `true`. The found element is
      * returned or a null-element.
      */
-    QDomElement findFirstNode(std::function<bool(QDomElement)> func) const;
+    QDomElement findFirstElement(std::function<bool(QDomElement)> func) const;
+
+    /**
+     * Iterates `dom_` to find the element with the given id. This works for all types
+     * of WorkTracker types that have an "id" attribute.
+     */
+    QDomElement findElementById(int id) const;
 
     /**
      * The DOM document that represents the XML database file.
      */
     XmlDataSource dataSource_;
     /**
-     * The link into the DOM tree that represents exactly one item of a specific (
-     * arbitrarily complex) model class.
+     * The link to the DOM element that represents the root of a repository's list of
+     * elements. It's somewhat equivalent to a database table.
      */
-    QDomElement dom_;
+    QDomElement repoElement_;
 };
 
 }
