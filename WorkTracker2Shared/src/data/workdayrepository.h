@@ -46,13 +46,15 @@ public:
      * Save a new workday to the database.
      *
      * @param workday
-     *      The workday to save. If the task has an id then its values are updated.
+     *      The workday to save. If the workday has an id then its values are updated.
+     *      Note: This value is updated with an id if doesn't already have one.
      *
      * @return
-     *      Returns the saved task. If the task is new then the returned value contains
-     *      the database id in addition to the name.
+     *      Returns the saved workday. This is the same object as the parameter. If the
+     *      workday is new then the returned value contains the database id in addition
+     *      to the name.
      */
-    virtual void saveWorkday(const Model::Workday& workday) = 0;
+    virtual Model::Workday saveWorkday(Model::Workday& workday) = 0;
 };
 
 }

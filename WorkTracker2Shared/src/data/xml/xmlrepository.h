@@ -42,23 +42,23 @@ protected:
     XmlRepository(XmlDataSource dataSource, const QString& repoName);
     
     /**
-     * Gets the given element's attribute value as a string. 
+     * Gets the given node's attribute value as a string.
      */
-    QString attributeString(const QString& name, const QDomElement& element) const;
+    QString attributeString(const QString& name, const QDomNode& node) const;
     
     /**
-     * Gets the given element's attribute value as a date-time. 
+     * Gets the given node's attribute value as a date-time.
      */
-    QDateTime attributeDateTime(const QString& name, const QDomElement& element) const;
+    QDateTime attributeDateTime(const QString& name, const QDomNode& node) const;
     /**
-     * Gets the given element's attribute value as a date. 
+     * Gets the given node's attribute value as a date.
      */
-    QDate attributeDate(const QString& name, const QDomElement& element) const;
+    QDate attributeDate(const QString& name, const QDomNode& node) const;
     
     /**
-     * Gets the given element's attribute value as an integer. 
+     * Gets the given node's attribute value as an integer.
      */
-    int attributeInt(const QString& name, const QDomElement& element) const;
+    int attributeInt(const QString& name, const QDomNode& node) const;
 
     /**
      * Add a new attribute to the element or assign a new value to an already existing

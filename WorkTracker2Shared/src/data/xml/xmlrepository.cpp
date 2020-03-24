@@ -106,27 +106,37 @@ XmlRepository::setAttribute(
 }
 
 QString 
-XmlRepository::attributeString(const QString& name, const QDomElement& element) const
+XmlRepository::attributeString(const QString& name, const QDomNode& node) const
 {
-    return element.attribute(name);
+    if (node.hasAttributes()) {
+        auto attributes = node.attributes();
+        auto attrNode = attributes.namedItem(name);
+        if (attrNode.isAttr() && !attrNode.isNull()) {
+            return attrNode.nodeValue();
+        }
+    }
+
+    qDebug() << "Node " << node.nodeName() << " does not have attribute " << name
+             << "; return empty string";
+    return QString{};
 }
 
 QDateTime 
-XmlRepository::attributeDateTime(const QString& name, const QDomElement& element) const
+XmlRepository::attributeDateTime(const QString& name, const QDomNode& node) const
 {
-    return QDateTime::fromString(attributeString(name, element), Qt::ISODate);
+    return QDateTime::fromString(attributeString(name, node), Qt::ISODate);
 }
 
 QDate 
-XmlRepository::attributeDate(const QString& name, const QDomElement& element) const
+XmlRepository::attributeDate(const QString& name, const QDomNode& node) const
 {
-    return QDate::fromString(attributeString(name, element), Qt::ISODate);
+    return QDate::fromString(attributeString(name, node), Qt::ISODate);
 }
 
 int 
-XmlRepository::attributeInt(const QString& name, const QDomElement& element) const
+XmlRepository::attributeInt(const QString& name, const QDomNode& node) const
 {
-    auto dt = attributeString(name, element);
+    auto dt = attributeString(name, node);
     auto ok = false;
     auto number = dt.toInt(&ok);
     return ok ? number : Core::Constants::invalidId;
