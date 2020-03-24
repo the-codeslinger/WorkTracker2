@@ -45,6 +45,20 @@ XmlRepository::XmlRepository(XmlDataSource dataSource, const QString& repoName)
     }
 }
 
+int
+XmlRepository::count() const
+{
+    return repoElement_.childNodes().size();
+}
+
+void
+XmlRepository::appendChild(QDomElement child)
+{
+    if (!child.isNull()) {
+        repoElement_.appendChild(child);
+    }
+}
+
 void
 XmlRepository::setAttribute(
         const QString& name,

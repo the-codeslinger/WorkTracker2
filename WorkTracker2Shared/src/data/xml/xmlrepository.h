@@ -21,6 +21,21 @@ protected:
     static const QString ID_ATTRIBUTE_NAME;
 
     /**
+     * @return
+     *      Returns the number of child elements underneath `repoElement_`.
+     */
+    int count() const;
+
+    /**
+     * Append a new XML element to `repoElement_`.
+     *
+     * @param child
+     *      The new XML element. The "type" it represents doesn't matter. The element is
+     *      only appended if it isn't null.
+     */
+    void appendChild(QDomElement child);
+
+    /**
      * Creates a new instance with a data source and a DOM element with the specified 
      * name.
      */
@@ -132,6 +147,26 @@ protected:
      */
     QDomElement findElementById(int id) const;
 
+    /**
+     * Convert all child elements of `repoElement_` into a list of equivalent DTOs using
+     * the supplied converter function. Note that for large "tables" and the specific
+     * objectes the resulting list can be large and consume quite some memory.
+     */
+    template<typename T>
+    QList<T> allElementsAs(std::function<T(QDomElement)> converter) const
+    {
+        auto results = QList<T>{};
+        auto children = repoElement_.childNodes();
+        for (int i = 0; i < children.size(); i++) {
+            auto taskNode = children.at(i);
+            if (taskNode.isElement() && !taskNode.isNull()) {
+                results << converter(taskNode.toElement());
+            }
+        }
+        return results;
+    }
+
+private:
     /**
      * The DOM document that represents the XML database file.
      */
