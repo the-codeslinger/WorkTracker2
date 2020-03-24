@@ -74,9 +74,15 @@ public:
      */
     bool save() const;
 
+    /**
+     * @return
+     *      Returns the database file location.
+     */
+    QString location() const;
+
 private:
-    QDomDocument m_dom;
-    QString      m_location;
+    QDomDocument document_;
+    QString      location_;
 };
 
 }
