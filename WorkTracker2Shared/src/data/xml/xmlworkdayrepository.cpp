@@ -54,9 +54,18 @@ XmlWorkdayRepository::saveWorkday(Model::Workday& workday)
 Model::Workday
 XmlWorkdayRepository::workdayFromElement(const QDomElement& workdayElement) const
 {
-    auto workTasks = QList<Model::WorkTask>{};
-    auto workTaskElements = workdayElement.childNodes();
+    return Model::Workday{
+        attributeInt(ID_ATTRIBUTE_NAME, workdayElement),
+        attributeDateTime(START_ATTRIBUTE_NAME, workdayElement),
+        attributeDateTime(STOP_ATTRIBUTE_NAME, workdayElement),
+        workTasksFromElement(workdayElement.childNodes())
+    };
+}
 
+QList<Model::WorkTask>
+XmlWorkdayRepository::workTasksFromElement(const QDomNodeList& workTaskElements) const
+{
+    auto workTasks = QList<Model::WorkTask>{};
     for (int c = 0; c < workTaskElements.size(); c++) {
         auto workTaskElement = workTaskElements.at(c);
         if (!workTaskElement.isElement() || !workTaskElement.isNull()) {
@@ -66,12 +75,48 @@ XmlWorkdayRepository::workdayFromElement(const QDomElement& workdayElement) cons
 
         workTasks << workTaskFromElement(workTaskElement.toElement());
     }
+    return workTasks;
+}
 
-    return Model::Workday{
-        attributeInt(ID_ATTRIBUTE_NAME, workdayElement),
-        attributeDateTime(START_ATTRIBUTE_NAME, workdayElement),
-        attributeDateTime(STOP_ATTRIBUTE_NAME, workdayElement),
-        workTasks
+Model::WorkTask
+XmlWorkdayRepository::workTaskFromElement(const QDomElement& workTaskElement) const
+{
+    auto workTask = Model::WorkTask{};
+    workTask.addTimeslots(timeslotsFromElement(workTaskElement.childNodes()));
+
+    auto taskId = attributeInt(ID_ATTRIBUTE_NAME, workTaskElement);
+    auto task = taskRepository_.findTaskById(taskId);
+    if (!task.has_value()) {
+        qDebug() << "Found taskId " << taskId << " but there is no task with this id";
+    } else {
+        workTask.setTask(task.value());
+    }
+
+    return workTask;
+}
+
+QList<Model::Timeslot>
+XmlWorkdayRepository::timeslotsFromElement(const QDomNodeList& timeslotElements) const
+{
+    auto timeslots = QList<Model::Timeslot>{};
+    for (int t = 0; t < timeslotElements.size(); t++) {
+        auto tnode = timeslotElements.at(t);
+        if (!tnode.isElement() || !tnode.isNull()) {
+            qDebug() << "Found timeslot element that is no element or is null; ignoring";
+            continue;
+        }
+
+        timeslots << timeslotFromElement(tnode.toElement());
+    }
+    return timeslots;
+}
+
+Model::Timeslot
+XmlWorkdayRepository::timeslotFromElement(const QDomElement& timeslotElement) const
+{
+    return Model::Timeslot{
+        attributeDateTime(START_ATTRIBUTE_NAME, timeslotElement),
+        attributeDateTime(STOP_ATTRIBUTE_NAME, timeslotElement)
     };
 }
 
@@ -85,6 +130,10 @@ XmlWorkdayRepository::elementFromWorkday(const Model::Workday& workday) const
 QDomElement
 XmlWorkdayRepository::updateElement(const Model::Workday& workday, QDomElement& element) const
 {
+    // The following could be moved into a few specialized methods, but I think the code
+    // concise enough to keep it in one place. Unlike reading from XML which is much more
+    // complex and thus split into several methods.
+
     // The day element.
     setAttribute(ID_ATTRIBUTE_NAME, workday.id(), element);
     setAttribute(START_ATTRIBUTE_NAME, workday.start(), element);
@@ -106,47 +155,4 @@ XmlWorkdayRepository::updateElement(const Model::Workday& workday, QDomElement& 
     }
 
     return element;
-}
-
-Model::WorkTask
-XmlWorkdayRepository::workTaskFromElement(const QDomElement& workTaskElement) const
-{
-    auto taskId = attributeInt(ID_ATTRIBUTE_NAME, workTaskElement);
-    auto task = taskRepository_.findTaskById(taskId);
-
-    auto workTask = Model::WorkTask{};
-    if (!task.has_value()) {
-        qDebug() << "Found taskId " << taskId << " but there is no task with this id";
-    }
-
-    workTask.setTask(task.value());
-    addTimeslots(workTaskElement.childNodes(), workTask);
-
-    return workTask;
-}
-
-void
-XmlWorkdayRepository::addTimeslots(
-        const QDomNodeList& nodes,
-        Model::WorkTask& workTask) const
-{
-    for (int t = 0; t < nodes.size(); t++) {
-        auto tnode = nodes.at(t);
-        if (!tnode.isElement() || !tnode.isNull()) {
-            qDebug() << "Found timeslot element that is no element or is null; ignoring";
-            continue;
-        }
-
-        auto timeslot = timeslotFromElement(tnode.toElement());
-        workTask.addTimeslot(timeslot);
-    }
-}
-
-Model::Timeslot
-XmlWorkdayRepository::timeslotFromElement(const QDomElement& timeslotElement) const
-{
-    return Model::Timeslot{
-        attributeDateTime(START_ATTRIBUTE_NAME, timeslotElement),
-        attributeDateTime(STOP_ATTRIBUTE_NAME, timeslotElement)
-    };
 }

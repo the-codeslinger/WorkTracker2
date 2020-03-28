@@ -38,9 +38,14 @@ public:
     void setTask(const Task& task);
 
     /**
-     * Add a time element to the work-task's list of times.
+     * Append a time element to the work-task's list of times.
      */
     void addTimeslot(const Timeslot& time);
+
+    /**
+     * Append all the time elements in the list to the work-task's list of times.
+     */
+    void addTimeslots(const QList<Timeslot> timeslots);
 
     /**
      * @return

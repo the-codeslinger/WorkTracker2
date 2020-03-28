@@ -30,6 +30,12 @@ WorkTask::addTimeslot(const Timeslot& time)
     timeslots_.append(time);
 }
 
+void
+WorkTask::addTimeslots(const QList<Timeslot> timeslots)
+{
+    timeslots_.append(timeslots);
+}
+
 QList<Timeslot>
 WorkTask::timeSlots() const
 {
