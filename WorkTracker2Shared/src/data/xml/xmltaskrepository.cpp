@@ -1,5 +1,5 @@
-#include "../../core/constants.h"
-#include "xmltaskrepository.h"
+#include <core/constants.h>
+#include <data/xml/xmltaskrepository.h>
 
 using namespace Data::Xml;
 

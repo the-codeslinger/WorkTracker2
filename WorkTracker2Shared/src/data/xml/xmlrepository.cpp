@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#include "xmlrepository.h"
-#include "../../core/constants.h"
-
 #include <QString>
 #include <QDate>
 #include <QDateTime>
 #include <QDebug>
+
+#include <core/constants.h>
+#include <data/xml/xmlrepository.h>
 
 using namespace Data::Xml;
 

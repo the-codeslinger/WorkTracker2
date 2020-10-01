@@ -7,7 +7,7 @@
 
 #include <algorithm>
 
-#include "xmldatasource.h"
+#include <data/xml/xmldatasource.h>
 
 using namespace Data::Xml;
 

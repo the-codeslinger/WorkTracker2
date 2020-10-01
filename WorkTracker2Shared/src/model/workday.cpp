@@ -1,5 +1,5 @@
-#include "../core/helper.h"
-#include "workday.h"
+#include <core/helper.h>
+#include <model/workday.h>
 
 using namespace Core;
 using namespace Model;

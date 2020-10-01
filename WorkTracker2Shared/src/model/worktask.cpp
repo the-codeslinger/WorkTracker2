@@ -1,8 +1,8 @@
 
 #include <algorithm>
 
-#include "../core/helper.h"
-#include "worktask.h"
+#include <core/helper.h>
+#include <model/worktask.h>
 
 using namespace Core;
 using namespace Model;

@@ -1,5 +1,5 @@
-#include "task.h"
-#include "../core/constants.h"
+#include <core/constants.h>
+#include <model/task.h>
 
 using namespace Model;
 

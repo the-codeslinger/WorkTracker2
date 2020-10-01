@@ -1,5 +1,5 @@
-#include "timeslot.h"
-#include "../core/constants.h"
+#include <core/constants.h>
+#include <model/timeslot.h>
 
 using namespace Model;
 using namespace Core;

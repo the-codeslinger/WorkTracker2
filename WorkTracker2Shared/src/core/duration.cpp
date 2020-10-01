@@ -1,5 +1,5 @@
-#include "duration.h"
-#include "constants.h"
+#include <core/duration.h>
+#include <core/constants.h>
 
 using namespace Core;
 

@@ -1,7 +1,7 @@
 #include <QDebug>
 
-#include "../../core/constants.h"
-#include "xmlworkdayrepository.h"
+#include <core/constants.h>
+#include <data/xml/xmlworkdayrepository.h>
 
 using namespace Data::Xml;
 

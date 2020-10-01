@@ -12,6 +12,8 @@ CONFIG += c++17
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
+INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include
+
 SOURCES += \
     src/core/duration.cpp \
     src/model/task.cpp \
@@ -24,20 +26,20 @@ SOURCES += \
     src/data/xml/xmlworkdayrepository.cpp
 
 HEADERS += \
-    src/worktracker2_global.h \
-    src/core/constants.h \
-    src/core/duration.h \
-    src/core/helper.h \
-    src/model/task.h \
-    src/model/timeslot.h \
-    src/model/workday.h \
-    src/model/worktask.h \
-    src/data/taskrepository.h \
-    src/data/workdayrepository.h \
-    src/data/xml/xmldatasource.h \
-    src/data/xml/xmlrepository.h \
-    src/data/xml/xmltaskrepository.h \
-    src/data/xml/xmlworkdayrepository.h
+    include/worktracker2_global.h \
+    include/core/constants.h \
+    include/core/duration.h \
+    include/core/helper.h \
+    include/model/task.h \
+    include/model/timeslot.h \
+    include/model/workday.h \
+    include/model/worktask.h \
+    include/data/taskrepository.h \
+    include/data/workdayrepository.h \
+    include/data/xml/xmldatasource.h \
+    include/data/xml/xmlrepository.h \
+    include/data/xml/xmltaskrepository.h \
+    include/data/xml/xmlworkdayrepository.h
 
 # Default rules for deployment.
 unix {
