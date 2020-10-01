@@ -4,3 +4,8 @@
 *.exe
 *.user
 *.autosave
+
+.vscode/
+build/
+*.pro.user
+*.pro.user*
