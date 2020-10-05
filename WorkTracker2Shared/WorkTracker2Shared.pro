@@ -12,7 +12,7 @@ CONFIG += c++17
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include
+INCLUDEPATH += include/
 
 SOURCES += \
     src/core/duration.cpp \
@@ -26,6 +26,7 @@ SOURCES += \
     src/data/xml/xmlworkdayrepository.cpp
 
 HEADERS += \
+    include/data/json/jsondatasource.h \
     include/worktracker2_global.h \
     include/core/constants.h \
     include/core/duration.h \
@@ -44,5 +45,6 @@ HEADERS += \
 # Default rules for deployment.
 unix {
     target.path = /usr/lib
+    INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include
 }
 !isEmpty(target.path): INSTALLS += target
