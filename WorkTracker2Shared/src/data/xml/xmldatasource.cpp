@@ -11,6 +11,9 @@
 
 using namespace Data::Xml;
 
+// TODO Improve dataSource handling; right now every repo has its own data source
+//      -> Data inconsistencies.
+
 XmlDataSource::XmlDataSource(QString location)
     : location_{std::move(location)}
 { }

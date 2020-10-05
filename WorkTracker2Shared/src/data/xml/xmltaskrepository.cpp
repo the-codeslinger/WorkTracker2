@@ -9,6 +9,9 @@ static const QString TASK_ELEMENT_NAME = "item";
 static const QString TASK_NAME_ATTRIBUTE_NAME = "name";
 static const QString TASK_LAST_USED_ATTRIBUTE_NAME = "last_used";
 
+// TODO Improve dataSource handling; right now every repo has its own data source
+//      -> Data inconsistencies.
+
 XmlTaskRepository::XmlTaskRepository(const XmlDataSource& dataSource)
     : XmlRepository(dataSource, TASKS_LIST_ELEMENT_NAME)
 {
