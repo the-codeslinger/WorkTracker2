@@ -12,7 +12,8 @@ CONFIG += c++17
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include
+INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include \
+    include/
 
 SOURCES += \
     src/core/duration.cpp \
