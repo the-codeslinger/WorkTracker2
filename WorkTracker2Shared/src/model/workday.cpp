@@ -1,11 +1,18 @@
 #include <core/helper.h>
+#include <core/constants.h>
 #include <model/workday.h>
 
 using namespace Core;
 using namespace Model;
 
+Workday::Workday()
+    : id_(Constants::invalidId)
+{
+}
+
 Workday::Workday(const QDateTime& start)
-    : start_(start)
+    : id_(Constants::invalidId)
+    , start_(start)
 {
 }
 

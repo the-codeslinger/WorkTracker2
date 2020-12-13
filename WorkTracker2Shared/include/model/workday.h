@@ -21,11 +21,15 @@ class WT2_EXPORT Workday {
 public:
     /**
      * Default constructor.
+     *
+     * Creates an invalid workday instance, i.e. database id = Constants::invalidId,
+     * invalid dates.
      */
-    Workday() = default;
+    Workday();
 
     /**
      * Create a new `Workday` with a starting timestamp. Use this to start a new day.
+     * The instance contains an invalid database, i.e. id = Constants::invalidId.
      */
     Workday(const QDateTime& start);
 
