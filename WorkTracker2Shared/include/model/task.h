@@ -8,7 +8,7 @@
 namespace Model {
 
 /**
- * A task is something a user is working on, e.g. writing class documentation.
+ * A task is something a user is working on, e.g. writing WorkTracker code.
  * It is used to group one or more timeframes that all sum up to the total time
  * the user has spent working on that task.
  *

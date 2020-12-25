@@ -13,9 +13,6 @@ static const QString TIMESLOT_ELEMENT_NAME = "time";
 static const QString START_ATTRIBUTE_NAME = "start";
 static const QString STOP_ATTRIBUTE_NAME = "stop";
 
-// TODO Improve dataSource handling; right now every repo has its own data source
-//      -> Data inconsistencies.
-
 XmlWorkdayRepository::XmlWorkdayRepository(
         const XmlDataSource& dataSource,
         const XmlTaskRepository& taskRepository)

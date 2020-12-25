@@ -26,10 +26,6 @@ using namespace Data::Xml;
 
 const QString XmlRepository::ID_ATTRIBUTE_NAME = "id";
 
-// TODO Improve dataSource handling; right now every repo has its own data source
-//      -> Data inconsistencies.
-//      -> Is moving dataSource really the correct thing here?
-
 XmlRepository::XmlRepository(XmlDataSource dataSource, const QString& repoName)
     : dataSource_{std::move(dataSource)}
 {

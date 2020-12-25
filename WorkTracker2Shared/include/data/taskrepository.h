@@ -13,8 +13,8 @@ namespace Data {
  * The main data access class for `Task` objects. This defines all the find and save
  * methods that are required by the application.
  *
- * It is comparable to Spring Data repository classes, only with less magic happening
- * in the background.
+ * It is conceptually comparable to Spring Data repository classes, only with less magic
+ * happening in the background.
  */
 class WT2_EXPORT TaskRepository {
 public:

@@ -1,5 +1,5 @@
 QT -= gui
-QT += core xml
+QT += core xml sql
 
 TEMPLATE = lib
 DEFINES += WT2_LIBRARY
@@ -12,21 +12,22 @@ CONFIG += c++17
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-INCLUDEPATH += include/
+INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include \
+    include/
 
 SOURCES += \
     src/core/duration.cpp \
+    src/core/logging.cpp \
     src/model/task.cpp \
     src/model/timeslot.cpp \
     src/model/workday.cpp \
     src/model/worktask.cpp \
-    src/data/xml/xmldatasource.cpp \
-    src/data/xml/xmlrepository.cpp \
-    src/data/xml/xmltaskrepository.cpp \
-    src/data/xml/xmlworkdayrepository.cpp
+    src/data/datasource.cpp \
+    src/data/sql/sqldatasource.cpp
 
 HEADERS += \
-    include/data/json/jsondatasource.h \
+    include/core/logging.h \
+    include/data/datasource.h \
     include/worktracker2_global.h \
     include/core/constants.h \
     include/core/duration.h \
@@ -37,14 +38,12 @@ HEADERS += \
     include/model/worktask.h \
     include/data/taskrepository.h \
     include/data/workdayrepository.h \
-    include/data/xml/xmldatasource.h \
-    include/data/xml/xmlrepository.h \
-    include/data/xml/xmltaskrepository.h \
-    include/data/xml/xmlworkdayrepository.h
+    include/data/sql/sqldatasource.h \
+    include/data/sql/sqltaskrepository.h
 
 # Default rules for deployment.
 unix {
     target.path = /usr/lib
-    INCLUDEPATH += /usr/lib/gcc/x86_64-linux-gnu/9/include
+    LIBS += -lsqlite3
 }
 !isEmpty(target.path): INSTALLS += target
