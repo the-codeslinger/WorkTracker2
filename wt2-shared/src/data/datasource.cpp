@@ -10,7 +10,7 @@ DataSource::DataSource(QString location, QString filename)
 {
     if (location.isEmpty())  {
         qCDebug(LOG_WT2) << "No database location specified; use user's default data directory";
-        location = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        location = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     }
 
     QDir dir(location);

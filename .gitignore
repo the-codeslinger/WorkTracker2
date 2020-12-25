@@ -1,10 +1,12 @@
 *.a
+*.o
 *.bak
 *.dll
 *.exe
 *.user
 *.autosave
 
+.git/
 .vscode/
 build/
 *.pro.user
