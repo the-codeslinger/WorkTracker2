@@ -1,5 +1,7 @@
 #pragma once
 
+#include <algorithm>
+
 #include <QTest>
 #include <QList>
 #include <QString>
@@ -9,37 +11,25 @@ namespace Test
 {
     class TestRunner
     {
-        typedef QList<QSharedPointer<QObject>> TestList;
-
     public:
-        static bool findObject(QSharedPointer<QObject> object)
+        static void add(QSharedPointer<QObject> newTest)
         {
-            TestList& list = testList();
-            if (list.contains(object)) {
-                return true;
-            }
+            auto& allTests = testList();
+            auto exists = std::any_of(allTests.cbegin(), allTests.cend(),
+                                      [newTest](const auto& knownTest) {
+                return knownTest->objectName() == newTest->objectName();
+            });
 
-            foreach (QSharedPointer<QObject> test, list) {
-                if (test->objectName() == object->objectName()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        static void addTest(QSharedPointer<QObject> object)
-        {
-            TestList &list = testList();
-            if (!findObject(object)) {
-                list.append(object);
+            if (!exists) {
+                allTests.append(newTest);
             }
         }
 
         static int run(int argc, char* argv[])
         {
-            int ret = 0;
+            auto ret = 0;
 
-            foreach (QSharedPointer<QObject> test, testList()) {
+            for (QSharedPointer<QObject> test : testList()) {
                 ret += QTest::qExec(test.data(), argc, argv);
             }
 
@@ -49,9 +39,9 @@ namespace Test
     private:
         TestRunner() = delete;
 
-        static TestList& testList()
+        static QList<QSharedPointer<QObject>>& testList()
         {
-            static TestList list;
+            static QList<QSharedPointer<QObject>> list;
             return list;
         }
     };
@@ -66,7 +56,7 @@ namespace Test
             : child{new T}
         {
             child->setObjectName(name);
-            TestRunner::addTest(child);
+            TestRunner::add(child);
         }
     };
 }
