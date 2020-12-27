@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16.0)
+cmake_minimum_required(VERSION 3.16.3)
 
 project(wt2-shared VERSION 2.0.0 DESCRIPTION "WorkTracker2 Shared Library")
 
