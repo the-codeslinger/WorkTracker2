@@ -1,27 +1,27 @@
 #pragma once
 
+#include <memory>
+#include <vector>
 #include <algorithm>
 
 #include <QTest>
-#include <QList>
 #include <QString>
-#include <QSharedPointer>
 
 namespace Test
 {
     class TestRunner
     {
     public:
-        static void add(QSharedPointer<QObject> newTest)
+        static void add(std::unique_ptr<QObject> newTest)
         {
             auto& allTests = testList();
             auto exists = std::any_of(allTests.cbegin(), allTests.cend(),
-                                      [newTest](const auto& knownTest) {
+                                      [&newTest](const auto& knownTest) {
                 return knownTest->objectName() == newTest->objectName();
             });
 
             if (!exists) {
-                allTests.append(newTest);
+                allTests.push_back(std::move(newTest));
             }
         }
 
@@ -29,8 +29,8 @@ namespace Test
         {
             auto ret = 0;
 
-            for (QSharedPointer<QObject> test : testList()) {
-                ret += QTest::qExec(test.data(), argc, argv);
+            for (const std::unique_ptr<QObject>& test : testList()) {
+                ret += QTest::qExec(test.get(), argc, argv);
             }
 
             return ret;
@@ -39,9 +39,9 @@ namespace Test
     private:
         TestRunner() = delete;
 
-        static QList<QSharedPointer<QObject>>& testList()
+        static std::vector<std::unique_ptr<QObject>>& testList()
         {
-            static QList<QSharedPointer<QObject>> list;
+            static std::vector<std::unique_ptr<QObject>> list;
             return list;
         }
     };
@@ -50,13 +50,11 @@ namespace Test
     class UnitTest
     {
     public:
-        QSharedPointer<T> child;
-
         UnitTest(const QString& name)
-            : child{new T}
         {
-            child->setObjectName(name);
-            TestRunner::add(child);
+            auto testObject = new T();
+            testObject->setObjectName(name);
+            TestRunner::add(std::unique_ptr<T>(testObject));
         }
     };
 }
