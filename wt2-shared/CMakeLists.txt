@@ -13,9 +13,7 @@ add_compile_definitions(WT2_LIBRARY)
 find_package(Qt6 COMPONENTS Core REQUIRED)
 find_package(Qt6 COMPONENTS Sql REQUIRED)
 
-include_directories(include/)
-
-add_library(${PROJECT_NAME} 
+set(SOURCES
     src/core/duration.cpp
     src/core/logging.cpp
     src/data/datasource.cpp
@@ -26,4 +24,24 @@ add_library(${PROJECT_NAME}
     src/model/worktask.cpp
 )
 
+set(HEADERS
+    include/worktracker2_global.h
+    include/core/constants.h
+    include/core/duration.h
+    include/core/helper.h
+    include/core/logging.h
+    include/data/datasource.h
+    include/data/taskrepository.h
+    include/data/workdayrepository.h
+    include/data/sql/sqldatasource.h
+    include/data/sql/sqltaskrepository.h
+    include/model/task.h
+    include/model/timeslot.h
+    include/model/workday.h
+    include/model/worktask.h
+)
+
+add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+target_include_directories(${PROJECT_NAME} PUBLIC include/)
 target_link_libraries(wt2-shared Qt6::Core Qt6::Sql)

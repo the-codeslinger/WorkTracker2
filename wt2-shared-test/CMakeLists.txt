@@ -15,14 +15,22 @@ if (NOT TARGET wt2-shared)
     add_subdirectory(../wt2-shared build)
 endif()
 
-include_directories(
-    ./
-    data/
-)
-
-add_executable(${PROJECT_NAME} 
+set(SOURCES
     main.cpp
     data/testdatasource.cpp
 )
 
+set(HEADERS
+    testrunner.h
+    data/testdatasource.h
+)
+
+set(INCLUDES
+    ./
+    data/
+)
+
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDES})
 target_link_libraries(${PROJECT_NAME} Qt6::Core Qt6::Test wt2-shared)
