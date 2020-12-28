@@ -6,8 +6,8 @@
 
 using namespace Data::Sql;
 
-static const QString FILENAME = "WorkTracker2.db";
-static const QString SQLITE_DRIVER = "QSQLITE";
+static const char* FILENAME = "WorkTracker2.db";
+static const char* SQLITE_DRIVER = "QSQLITE";
 
 SqlDataSource::SqlDataSource(QString location)
     : Data::DataSource{location, FILENAME}
