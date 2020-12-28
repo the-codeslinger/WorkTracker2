@@ -45,10 +45,6 @@ public:
      * connection object returned may not be a valid connection.
      */
     QSqlDatabase database() const;
-
-private:
-    QString location_;
-
 };
 
 }
