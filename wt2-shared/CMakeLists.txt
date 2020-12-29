@@ -6,8 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_AUTOMOC ON)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wpedantic -Wextra")
-
 add_compile_definitions(WT2_LIBRARY)
 
 find_package(Qt6 COMPONENTS Core REQUIRED)
@@ -41,7 +39,7 @@ set(HEADERS
     include/model/worktask.h
 )
 
-add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
 
 target_include_directories(${PROJECT_NAME} PUBLIC include/)
 target_link_libraries(wt2-shared Qt6::Core Qt6::Sql)
