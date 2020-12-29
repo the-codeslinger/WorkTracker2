@@ -28,6 +28,8 @@ Example on my Linux installation:
 Example on my Windows installation:
 
     set CMAKE_PREFIX_PATH=C:\Apps\Qt6\6.0.0\mingw81_64
+    OR
+    set CMAKE_PREFIX_PATH=C:\Apps\Qt6\6.0.0\msvc2019_64
 
 If you use Qt Creator for development then this should not be 
 necessary.
