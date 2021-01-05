@@ -41,5 +41,7 @@ set(HEADERS
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
 
+message(STATUS "BUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}")
+
 target_include_directories(${PROJECT_NAME} PUBLIC include/)
 target_link_libraries(wt2-shared Qt6::Core Qt6::Sql)

@@ -45,6 +45,20 @@ public:
      * connection object returned may not be a valid connection.
      */
     QSqlDatabase database() const;
+
+private:
+    static constexpr const char* FILENAME = "WorkTracker2.db";
+    static constexpr const char* SQLITE_DRIVER = "QSQLITE";
+
+    /**
+     * Execute DDL commands to create tables and indices.
+     */
+    bool createTables();
+
+    /**
+     * Verify that the database contains a valid table structure.
+     */
+    bool verifyTables() const;
 };
 
 }
