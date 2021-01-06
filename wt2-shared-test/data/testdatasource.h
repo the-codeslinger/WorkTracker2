@@ -11,7 +11,7 @@ private slots:
     // Custom tests.
     void loadDefaultLocationCreateNewSuccess();
     void loadSpecificLocationCreateNewSuccess();
-//    void loadExistingInvalidDbError();
+    void loadExistingInvalidDbError();
 
 private:
     QString expectedDefaultDbFilePath_;

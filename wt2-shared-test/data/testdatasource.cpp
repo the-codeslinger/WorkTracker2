@@ -70,23 +70,23 @@ TestDataSource::loadSpecificLocationCreateNewSuccess()
     QVERIFY(QFile::exists(expectedSpecificDbFilePath_));
 }
 
-//void
-//TestDataSource::loadExistingInvalidDbError()
-//{
-//    // Given
-//    auto invalidDbFile = QFile{expectedSpecificDbFilePath_};
-//    if (!invalidDbFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-//        QFAIL("Cannot create invalid test database file");
-//    }
-//    auto stream = QTextStream{&invalidDbFile};
-//    stream << "This is not a valid SQL database file";
-//    invalidDbFile.close();
+void
+TestDataSource::loadExistingInvalidDbError()
+{
+    // Given
+    auto invalidDbFile = QFile{expectedSpecificDbFilePath_};
+    if (!invalidDbFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QFAIL("Cannot create invalid test database file");
+    }
+    auto stream = QTextStream{&invalidDbFile};
+    stream << "This is not a valid SQL database file";
+    invalidDbFile.close();
 
-//    auto dataSource = Data::Sql::SqlDataSource{QDir::currentPath()};
+    auto dataSource = Data::Sql::SqlDataSource{QDir::currentPath()};
 
-//    // When
-//    auto success = dataSource.load();
+    // When
+    auto success = dataSource.load();
 
-//    // Then
-//    QVERIFY(!success);
-//}
+    // Then
+    QVERIFY(!success);
+}
