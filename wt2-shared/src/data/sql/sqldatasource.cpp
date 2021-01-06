@@ -53,70 +53,60 @@ SqlDataSource::database() const
 bool
 SqlDataSource::createTables()
 {
-    auto conn = database();
-    if (!conn.transaction()) {
-        return false;
-    }
+    constexpr const char* foreignKeys =
+            "PRAGMA foreign_keys = ON;";
+    constexpr const char* tableTask =
+            "CREATE TABLE task"
+            "("
+              "id        INTEGER PRIMARY KEY ASC,"
+              "name      TEXT    NOT NULL,"
+              "last_used TEXT    NOT NULL"
+            ");";
+    constexpr const char* tableWorkday =
+            "CREATE TABLE workday"
+            "("
+              "id        INTEGER PRIMARY KEY ASC,"
+              "start     TEXT    NOT NULL,"
+              "stop      TEXT    NULL"
+            ");";
+    constexpr const char* tableWorktask =
+            "CREATE TABLE worktask"
+            "("
+              "id         INTEGER PRIMARY KEY ASC,"
+              "workday_id BIGINT  NOT NULL,"
+              "task_id    BIGINT  NOT NULL,"
+              "FOREIGN KEY (workday_id) REFERENCES workday (id) ON DELETE CASCADE,"
+              "FOREIGN KEY (task_id)    REFERENCES task (id)    ON DELETE CASCADE"
+            ");";
+    constexpr const char* tableTimeslot =
+            "CREATE TABLE timeslot"
+            "("
+              "id          INTEGER PRIMARY KEY ASC,"
+              "worktask_id BIGINT  NOT NULL,"
+              "start       TEXT    NOT NULL,"
+              "stop        TEXT    NULL,"
+              "FOREIGN KEY (worktask_id) REFERENCES worktask (id) ON DELETE CASCADE"
+            ");";
+    constexpr const char* indexTask =
+            "CREATE INDEX ix_task_last_used ON task (last_used);";
 
-    QSqlQuery query;
-
-    if (query.exec("PRAGMA foreign_keys = ON;")) {
-        return false;
-    }
-
-    if (query.exec("CREATE TABLE task"
-                   "("
-                     "id        INTEGER PRIMARY KEY ASC,"
-                     "name      TEXT    NOT NULL,"
-                     "last_used TEXT    NOT NULL"
-                   ");")) {
-        return false;
-    }
-
-    if (query.exec("CREATE INDEX ix_task_last_used ON task (last_used);")) {
-        return false;
-    }
-
-    if (query.exec("CREATE TABLE workday"
-                   "("
-                     "id        INTEGER PRIMARY KEY ASC,"
-                     "start     TEXT    NOT NULL,"
-                     "stop      TEXT    NULL"
-                   ");")) {
-        return false;
-    }
-
-    if (query.exec("CREATE TABLE worktask"
-                   "("
-                     "id         INTEGER PRIMARY KEY ASC,"
-                     "workday_id BIGINT  NOT NULL,"
-                     "task_id    BIGINT  NOT NULL,"
-                     "FOREIGN KEY (workday_id) REFERENCES workday (id) ON DELETE CASCADE,"
-                     "FOREIGN KEY (task_id)    REFERENCES task (id)    ON DELETE CASCADE"
-                   ");")) {
-        return false;
-    }
-
-    if (query.exec("CREATE TABLE timeslot"
-                   "("
-                     "id          INTEGER PRIMARY KEY ASC,"
-                     "worktask_id BIGINT  NOT NULL,"
-                     "start       TEXT    NOT NULL,"
-                     "stop        TEXT    NULL,"
-                     "FOREIGN KEY (worktask_id) REFERENCES worktask (id) ON DELETE CASCADE"
-                   ");")) {
-        return false;
-    }
-
-    if (!conn.commit()) {
-        conn.rollback();
-        return false;
-    }
-    return false;
+    auto query = QSqlQuery{database()};
+    return query.exec(foreignKeys)
+            && query.exec(tableTask)
+            && query.exec(tableWorkday)
+            && query.exec(tableWorktask)
+            && query.exec(tableTimeslot)
+            && query.exec(indexTask);
 }
 
 bool
 SqlDataSource::verifyTables() const
 {
-    return false;
+    auto conn = database();
+    auto tables = conn.tables();
+
+    return tables.contains("task")
+            && tables.contains("workday")
+            && tables.contains("worktask")
+            && tables.contains("timeslot");
 }
