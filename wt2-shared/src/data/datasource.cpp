@@ -22,7 +22,12 @@ DataSource::DataSource(QString location, QString filename)
         }
     }
 
-    absoluteFilePath_ = location + QDir::separator() + filename;
+    absoluteFilePath_ = location;
+    if (!location.endsWith(QDir::separator())) {
+        absoluteFilePath_ += QDir::separator();
+    }
+    absoluteFilePath_ +=  filename;
+
     qCDebug(LOG_WT2) << "Database file-path: " << absoluteFilePath_;
 }
 

@@ -30,6 +30,7 @@ namespace Test
             auto ret = 0;
 
             for (const std::unique_ptr<QObject>& test : testList()) {
+                TESTLIB_SELFCOVERAGE_START(test->objectName());
                 ret += QTest::qExec(test.get(), argc, argv);
             }
 

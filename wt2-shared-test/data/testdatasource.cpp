@@ -11,6 +11,18 @@
 DECLARE_TEST(TestDataSource)
 
 void
+TestDataSource::initTestCase()
+{
+    Data::Sql::SqlDataSource::init();
+}
+
+void
+TestDataSource::cleanupTestCase()
+{
+    Data::Sql::SqlDataSource::cleanup();
+}
+
+void
 TestDataSource::init()
 {
     const auto dbName = QString{"WorkTracker2.db"};
@@ -70,23 +82,45 @@ TestDataSource::loadSpecificLocationCreateNewSuccess()
     QVERIFY(QFile::exists(expectedSpecificDbFilePath_));
 }
 
-//void
-//TestDataSource::loadExistingInvalidDbError()
-//{
-//    // Given
-//    auto invalidDbFile = QFile{expectedSpecificDbFilePath_};
-//    if (!invalidDbFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-//        QFAIL("Cannot create invalid test database file");
-//    }
-//    auto stream = QTextStream{&invalidDbFile};
-//    stream << "This is not a valid SQL database file";
-//    invalidDbFile.close();
+void
+TestDataSource::loadExistingInvalidDbError()
+{
+    // Given
+    auto invalidDbFile = QFile{expectedSpecificDbFilePath_};
+    if (!invalidDbFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QFAIL("Cannot create invalid test database file");
+    }
+    auto stream = QTextStream{&invalidDbFile};
+    stream << "This is not a valid SQL database file";
+    invalidDbFile.close();
 
-//    auto dataSource = Data::Sql::SqlDataSource{QDir::currentPath()};
+    auto dataSource = Data::Sql::SqlDataSource{QDir::currentPath()};
 
-//    // When
-//    auto success = dataSource.load();
+    // When
+    auto success = dataSource.load();
 
-//    // Then
-//    QVERIFY(!success);
-//}
+    // Then
+    QVERIFY(!success);
+}
+
+void
+TestDataSource::loadExistingValidDbSuccess()
+{
+    // Given
+    {
+        // Simulate first application start that creates initial database file.
+        auto dataSource = Data::Sql::SqlDataSource{QDir::currentPath()};
+        QVERIFY(dataSource.load());
+        QVERIFY(QFile::exists(expectedSpecificDbFilePath_));
+    }
+
+    // Simulate subsequent application start.
+    auto dataSource = Data::Sql::SqlDataSource{QDir::currentPath()};
+
+    // When
+    auto success = dataSource.load();
+
+    // Then
+    QVERIFY(success);
+    QVERIFY(QFile::exists(expectedSpecificDbFilePath_));
+}

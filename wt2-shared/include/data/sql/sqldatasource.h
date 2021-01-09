@@ -9,8 +9,27 @@ class QSqlDatabase;
 
 namespace Data::Sql {
 
+/**
+ * Implements a connection to a SQLite database. One or more `SqlDataSource` classes
+ * can exist at the same time for the same database.
+ *
+ * On start of the application `SqlDataSource::init()` must be called and
+ * `SqlDataSource::cleanup()` when the application terminates.
+ */
 class WT2_EXPORT SqlDataSource : Data::DataSource {
 public:
+    /**
+     * Registers a database with `QSqlDatabase` using the connection name
+     * "WorkTracker2.db".
+     * Must be called once on application startup.
+     */
+    static void init();
+    /**
+     * Removes the database connection "WorkTracker2.db" from `QSqlDatabase`.
+     * Must be called once on application termination.
+     */
+    static void cleanup();
+
     /**
      * Creates a new data source with an optional path to the database file. The database
      * filename is "WorkTracker2.db".
@@ -45,6 +64,20 @@ public:
      * connection object returned may not be a valid connection.
      */
     QSqlDatabase database() const;
+
+private:
+    static constexpr const char* FILENAME = "WorkTracker2.db";
+    static constexpr const char* SQLITE_DRIVER = "QSQLITE";
+
+    /**
+     * Execute DDL commands to create tables and indices.
+     */
+    bool createTables();
+
+    /**
+     * Verify that the database contains a valid table structure.
+     */
+    bool verifyTables() const;
 };
 
 }
