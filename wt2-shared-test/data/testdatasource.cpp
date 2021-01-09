@@ -11,6 +11,18 @@
 DECLARE_TEST(TestDataSource)
 
 void
+TestDataSource::initTestCase()
+{
+    Data::Sql::SqlDataSource::init();
+}
+
+void
+TestDataSource::cleanupTestCase()
+{
+    Data::Sql::SqlDataSource::cleanup();
+}
+
+void
 TestDataSource::init()
 {
     const auto dbName = QString{"WorkTracker2.db"};

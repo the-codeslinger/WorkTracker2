@@ -8,6 +8,18 @@
 
 using namespace Data::Sql;
 
+void
+SqlDataSource::init()
+{
+    QSqlDatabase::addDatabase(SQLITE_DRIVER, FILENAME);
+}
+
+void
+SqlDataSource::cleanup()
+{
+    QSqlDatabase::removeDatabase(FILENAME);
+}
+
 SqlDataSource::SqlDataSource(QString location)
     : Data::DataSource{location, FILENAME}
 {
@@ -19,7 +31,7 @@ SqlDataSource::load()
     auto dbFilePath = absoluteFilePath();
     auto dbExists = QFile::exists(dbFilePath);
 
-    auto db = QSqlDatabase::addDatabase(SQLITE_DRIVER);
+    auto db = database();
     db.setDatabaseName(dbFilePath);
 
     if (!db.open()) {
@@ -47,7 +59,7 @@ SqlDataSource::database() const
 {
     // Since only one connection is required for this application the default connection
     // is used.
-    return QSqlDatabase::database();
+    return QSqlDatabase::database(FILENAME);
 }
 
 bool
