@@ -15,6 +15,7 @@ private slots:
     void loadDefaultLocationCreateNewSuccess();
     void loadSpecificLocationCreateNewSuccess();
     void loadExistingInvalidDbError();
+    void loadExistingValidDbSuccess();
 
 private:
     QString expectedDefaultDbFilePath_;

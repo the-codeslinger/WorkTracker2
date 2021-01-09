@@ -102,3 +102,25 @@ TestDataSource::loadExistingInvalidDbError()
     // Then
     QVERIFY(!success);
 }
+
+void
+TestDataSource::loadExistingValidDbSuccess()
+{
+    // Given
+    {
+        // Simulate first application start that creates initial database file.
+        auto dataSource = Data::Sql::SqlDataSource{QDir::currentPath()};
+        QVERIFY(dataSource.load());
+        QVERIFY(QFile::exists(expectedSpecificDbFilePath_));
+    }
+
+    // Simulate subsequent application start.
+    auto dataSource = Data::Sql::SqlDataSource{QDir::currentPath()};
+
+    // When
+    auto success = dataSource.load();
+
+    // Then
+    QVERIFY(success);
+    QVERIFY(QFile::exists(expectedSpecificDbFilePath_));
+}
