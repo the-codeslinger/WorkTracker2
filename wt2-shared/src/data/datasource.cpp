@@ -31,6 +31,11 @@ DataSource::DataSource(QString location, QString filename)
     qCDebug(LOG_WT2) << "Database file-path: " << absoluteFilePath_;
 }
 
+DataSource::DataSource(DataSource&& other)
+    : absoluteFilePath_(std::move(other.absoluteFilePath_))
+{
+}
+
 QString
 DataSource::absoluteFilePath() const
 {

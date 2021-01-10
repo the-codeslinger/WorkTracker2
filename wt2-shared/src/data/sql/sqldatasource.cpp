@@ -25,6 +25,11 @@ SqlDataSource::SqlDataSource(QString location)
 {
 }
 
+SqlDataSource::SqlDataSource(SqlDataSource&& other)
+    : DataSource(std::move(other))
+{
+}
+
 bool
 SqlDataSource::load()
 {

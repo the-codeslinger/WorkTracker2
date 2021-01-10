@@ -25,6 +25,11 @@ protected:
     DataSource(QString location, QString filename);
 
     /**
+     * Move-constructor.
+     */
+    DataSource(DataSource&& other);
+
+    /**
      * Returns the computed database file's file-path that includes absolute path to the
      * file and the file's name, based on the values passed to the constructor.
      */

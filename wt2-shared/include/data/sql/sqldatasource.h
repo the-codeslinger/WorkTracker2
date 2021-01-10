@@ -42,6 +42,11 @@ public:
     SqlDataSource(QString location = "");
 
     /**
+     * Move-constructor.
+     */
+    SqlDataSource(SqlDataSource&& other);
+
+    /**
      * Load an existing database or create a new one. Uses the location specified in the
      * constructor or the user's profile default data directory.
      *
