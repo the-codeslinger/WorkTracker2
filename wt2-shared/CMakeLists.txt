@@ -16,6 +16,7 @@ set(SOURCES
     src/core/logging.cpp
     src/data/datasource.cpp
     src/data/sql/sqldatasource.cpp
+    src/data/sql/sqltaskrepository.cpp
     src/model/task.cpp
     src/model/timeslot.cpp
     src/model/workday.cpp
