@@ -11,20 +11,10 @@
 DECLARE_TEST(TestDataSource)
 
 void
-TestDataSource::initTestCase()
-{
-    Data::Sql::SqlDataSource::init();
-}
-
-void
-TestDataSource::cleanupTestCase()
-{
-    Data::Sql::SqlDataSource::cleanup();
-}
-
-void
 TestDataSource::init()
 {
+    Data::Sql::SqlDataSource::init();
+
     const auto dbName = QString{"WorkTracker2.db"};
 
     expectedDefaultDbFilePath_ =
@@ -37,11 +27,15 @@ TestDataSource::init()
 void
 TestDataSource::cleanup()
 {
+    Data::Sql::SqlDataSource::cleanup();
+
     auto defaultDbFile = QFile{expectedDefaultDbFilePath_};
     if (defaultDbFile.exists()) {
         if (!defaultDbFile.remove()) {
             qDebug() << "WARN: Could not cleanup default database at "
-                     << expectedDefaultDbFilePath_;
+                     << expectedDefaultDbFilePath_
+                     << " - "
+                     << defaultDbFile.errorString();
         }
     }
 
@@ -49,7 +43,9 @@ TestDataSource::cleanup()
     if (specificDbFile.exists()) {
         if (!specificDbFile.remove()) {
             qDebug() << "WARN: Could not cleanup specific database at "
-                     << expectedSpecificDbFilePath_;
+                     << expectedSpecificDbFilePath_
+                     << " - "
+                     << specificDbFile.errorString();
         }
     }
 }
