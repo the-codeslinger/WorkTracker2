@@ -7,7 +7,9 @@
 *.autosave
 
 .git/
+.vs/
 .vscode/
 build/
 *.pro.user
 *.pro.user*
+CMakeSettings.json
